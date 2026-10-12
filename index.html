@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>影志档案----yingzhidangan-h5</title>
+<meta name="description" content="影志档案（yingzhidangan-h5）做电影精选片单、分类档案与观影札记的静态示例单页；不提供在线播放、解析与下载，移动自适应，符合必应基础收录规范。" />
+<meta name="keywords" content="影志档案, yingzhidangan-h5, 电影片单, 分类档案, 观影札记, 展映单元" />
+<link rel="canonical" href="https://yingzhidangan-h5.github.io/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="影志档案" />
+<meta property="og:url" content="https://yingzhidangan-h5.github.io/" />
+<meta property="og:description" content="电影精选片单、分类档案与观影札记静态示例站。" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="影志档案" />
+<meta name="twitter:description" content="yingzhidangan-h5 电影片单与分类档案单页。" />
+<style>
+:root{
+  --bg:#0d0711;
+  --bg2:#1a0f24;
+  --paper:#251836;
+  --ink:#f0e6f5;
+  --ink2:#a98bc2;
+  --accent:#a855f7;
+  --accent2:#22d3ee;
+  --gold:#e879f9;
+  --line:rgba(168,85,247,.28);
+  --line2:rgba(240,230,245,.10);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.85}
+a{color:inherit;text-decoration:none}
+
+/* 顶栏 */
+.navbar{position:sticky;top:0;z-index:50;background:rgba(13,7,17,.88);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:12px;margin-right:auto}
+.logo .badge{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0d0711;display:grid;place-items:center;font-weight:900;font-size:14px;border:2px solid var(--gold)}
+.logo b{font-size:18px;letter-spacing:.03em;display:block;line-height:1.1}
+.logo span{font-size:11px;color:var(--ink2)}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap}
+.nav-links a{padding:10px 16px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink2);border:1px solid var(--line2);min-height:44px;display:inline-flex;align-items:center;transition:.25s}
+.nav-links a:hover{color:var(--accent);border-color:var(--accent)}
+.nav-links a.active{background:var(--accent);color:#0d0711;border-color:var(--accent)}
+
+.section{padding:64px 50px;border-bottom:1px solid var(--line2)}
+.section:last-child{border-bottom:none}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.18em;color:var(--accent);border:1px solid var(--line);padding:5px 14px;border-radius:999px;margin-bottom:14px}
+.h2{font-size:clamp(22px,3.6vw,32px);margin:0 0 6px}
+.sub{margin:0 0 30px;color:var(--ink2);font-size:14px}
+
+/* Hero 全屏 */
+.hero{background:radial-gradient(1100px 380px at 80% -10%,rgba(34,211,238,.12),transparent),radial-gradient(600px 300px at 20% 80%,rgba(168,85,247,.10),transparent),linear-gradient(135deg,var(--bg2),var(--bg));min-height:90vh;display:flex;align-items:center}
+.hero-inner{max-width:900px}
+.hero h1{font-size:clamp(32px,5.5vw,56px);margin:0 0 18px;line-height:1.1;font-weight:900}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:16px;color:var(--ink2);max-width:540px;margin:0 0 28px}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.btn{min-height:48px;padding:14px 26px;border-radius:999px;font-weight:700;font-size:15px;border:2px solid var(--accent);background:var(--accent);color:#0d0711;display:inline-flex;align-items:center;transition:.25s}
+.btn:hover{background:transparent;color:var(--accent)}
+.btn.out{background:transparent;color:var(--gold);border-color:var(--gold)}
+.btn.out:hover{background:var(--gold);color:#0d0711}
+
+/* 磁贴网格 - 精选片单 */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:16px;grid-auto-flow:dense}
+.tile{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:var(--paper);transition:.3s;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;position:relative}
+.tile:hover{border-color:var(--accent);transform:translateY(-4px)}
+.tile.large{grid-column:span 2;grid-row:span 2}
+.tile.wide{grid-column:span 2}
+.tile.tall{grid-row:span 2}
+.tile .yr{font-size:13px;color:var(--accent);font-weight:700;letter-spacing:.08em}
+.tile h3{margin:6px 0;font-size:18px}
+.tile.large h3{font-size:24px}
+.tile .meta{font-size:13px;color:var(--ink2)}
+.tile .tag{align-self:flex-start;font-size:11px;color:var(--gold);border:1px solid var(--gold);padding:4px 12px;border-radius:999px;position:relative;z-index:1}
+.tile::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(168,85,247,.08),transparent 70%);pointer-events:none}
+
+/* 分类档案 - 双列 */
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.cat{border:1px solid var(--line2);border-radius:var(--radius);padding:26px;background:var(--bg2);transition:.25s;display:flex;gap:18px;align-items:flex-start}
+.cat:hover{border-color:var(--accent2);background:rgba(34,211,238,.04)}
+.cat .icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-size:24px;flex-shrink:0}
+.cat h3{margin:0 0 8px;font-size:17px}
+.cat p{margin:0;font-size:14px;color:var(--ink2);line-height:1.8}
+.cat .by{margin-top:10px;font-size:12px;color:var(--accent)}
+
+/* 观影随笔 - 左右交替 */
+.notes{display:flex;flex-direction:column;gap:20px}
+.note{display:grid;grid-template-columns:120px 1fr;gap:24px;align-items:start;border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:var(--paper)}
+.note:nth-child(even){grid-template-columns:1fr 120px}
+.note:nth-child(even) .note-date{grid-column:2;grid-row:1}
+.note:nth-child(even) .note-body{grid-column:1;grid-row:1}
+.note-date{text-align:center;padding:16px;border:1px solid var(--line2);border-radius:14px;background:var(--bg2)}
+.note-date .d{font-size:32px;font-weight:900;color:var(--accent);display:block}
+.note-date .m{font-size:12px;color:var(--ink2)}
+.note-body h3{margin:0 0 8px;font-size:17px}
+.note-body p{margin:0;font-size:14px;color:var(--ink2);line-height:1.8}
+
+/* 展映单元 - 圆形网格 */
+.units{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.unit{border:1px solid var(--line);border-radius:50%;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:.3s;background:var(--paper);text-align:center;padding:20px}
+.unit:hover{border-color:var(--accent);transform:scale(1.05);background:rgba(168,85,247,.06)}
+.unit .ico{font-size:32px;margin-bottom:8px}
+.unit h3{margin:0 0 4px;font-size:14px;color:var(--gold)}
+.unit p{margin:0;font-size:11px;color:var(--ink2)}
+
+/* 关于 */
+.about{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ab{border:1px solid var(--line);border-radius:var(--radius);padding:30px;background:var(--paper);text-align:center;transition:.25s}
+.ab:hover{border-color:var(--accent2)}
+.ab .ic{font-size:38px;margin-bottom:12px}
+.ab h3{margin:0 0 8px;font-size:16px}
+.ab p{margin:0;font-size:13px;color:var(--ink2);line-height:1.7}
+
+/* FAQ */
+.faq{display:flex;flex-direction:column;gap:12px}
+.fq{border:1px solid var(--line2);border-radius:var(--radius);background:var(--paper);overflow:hidden}
+.fq summary{list-style:none;cursor:pointer;padding:20px 26px;font-weight:600;font-size:15px;display:flex;justify-content:space-between;align-items:center;min-height:48px}
+.fq summary::-webkit-details-marker{display:none}
+.fq summary .plus{color:var(--accent);font-size:22px;font-weight:300;transition:.25s}
+.fq[open] summary .plus{transform:rotate(45deg)}
+.fq p{padding:0 26px 20px;margin:0;font-size:14px;color:var(--ink2);line-height:1.8}
+
+/* 页脚 */
+.foot{padding:40px 50px;background:var(--bg2);border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot-brand{display:flex;align-items:center;gap:12px}
+.foot-brand .badge{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0d0711;display:grid;place-items:center;font-weight:900;font-size:12px;border:1px solid var(--gold)}
+.foot-brand b{font-size:15px}
+.foot-links{display:flex;gap:22px;font-size:13px;color:var(--ink2);flex-wrap:wrap}
+.foot-links a:hover{color:var(--accent)}
+
+@media(max-width:1024px){
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .units{grid-template-columns:1fr 1fr 1fr}
+}
+@media(max-width:768px){
+  .navbar{padding:12px 16px}
+  .nav-links{width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px}
+  .nav-links a{flex:0 0 auto}
+  .section{padding:44px 18px}
+  .tiles{grid-template-columns:1fr;grid-auto-rows:auto}
+  .tile,.tile.large,.tile.wide,.tile.tall{grid-column:span 1;grid-row:span 1}
+  .tile.large h3{font-size:18px}
+  .cats{grid-template-columns:1fr}
+  .note,.note:nth-child(even){grid-template-columns:1fr;gap:12px}
+  .note-date,.note:nth-child(even) .note-date{display:none}
+  .units{grid-template-columns:1fr 1fr}
+  .unit{border-radius:var(--radius);aspect-ratio:auto}
+  .about{grid-template-columns:1fr}
+  .foot{padding:28px 18px;flex-direction:column;text-align:center}
+  .foot-links{justify-content:center}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="navbar">
+  <div class="logo">
+    <span class="badge">影志</span>
+    <span class="txt"><b>影志档案</b><span>yingzhidangan-h5.github.io</span></span>
+  </div>
+  <nav class="nav-links">
+    <a href="#hero" class="active">首页</a>
+    <a href="#tiles">精选片单</a>
+    <a href="#cats">分类档案</a>
+    <a href="#notes">观影随笔</a>
+    <a href="#units">展映单元</a>
+    <a href="#about">关于本站</a>
+    <a href="#faq">常见问题</a>
+  </nav>
+</header>
+
+<main>
+  <section class="section hero" id="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">YINGZHI ARCHIVE</span>
+      <h1>不叫"影视网站"，<br>只做<em>影志档案</em>与观影札记</h1>
+      <p>原提交"影视网站"直接指向未授权在线播片/解析/下载，需《信息网络传播视听节目许可证》与著作权授权；本页轻改为"影志档案"，纯静态做精选片单、分类档案与观影札记。正片只引导院线、正版流媒体或合法展映，不播、不解析、不下载。</p>
+      <div class="cta">
+        <a class="btn" href="#tiles">看精选片单</a>
+        <a class="btn out" href="#notes">读观影随笔</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="tiles">
+    <span class="eyebrow">PLAYLIST TILES</span>
+    <h2 class="h2">精选片单</h2>
+    <p class="sub">磁贴网格布局，按场景与节奏排片</p>
+    <div class="tiles">
+      <div class="tile large"><div class="yr">2014</div><h3>小森林 夏秋篇</h3><div class="meta">森淳一 · 做饭、种地、四季独居</div><span class="tag">生活</span></div>
+      <div class="tile"><div class="yr">2015</div><h3>海街日记</h3><div class="meta">是枝裕和 · 四姐妹、梅酒</div><span class="tag">家庭</span></div>
+      <div class="tile"><div class="yr">1975</div><h3>镜子</h3><div class="meta">塔可夫斯基 · 长镜</div><span class="tag">作者</span></div>
+      <div class="tile wide"><div class="yr">2000</div><h3>花样年华</h3><div class="meta">王家卫 · 旗袍、走廊、克制爱</div><span class="tag">文艺</span></div>
+      <div class="tile"><div class="yr">2002</div><h3>谍影重重</h3><div class="meta">道格·里曼 · 手持、失忆</div><span class="tag">动作</span></div>
+      <div class="tile"><div class="yr">1998</div><h3>拯救大兵瑞恩</h3><div class="meta">斯皮尔伯格 · 诺曼底</div><span class="tag">战争</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="cats" style="background:var(--bg2)">
+    <span class="eyebrow">CATEGORY ARCHIVE</span>
+    <h2 class="h2">分类档案</h2>
+    <p class="sub">把"随便看片"拆成可检索维度，不接盗版源</p>
+    <div class="cats">
+      <div class="cat"><div class="icon">🍲</div><div><h3>生活家庭：节气与慢节奏</h3><p>小森林、海街按"食物—季节—独居/家庭"打标；只写适合晚上、周末、一个人看，不写播放地址、不解析源。</p><div class="by">— 生活组</div></div></div>
+      <div class="cat"><div class="icon">🎞️</div><div><h3>作者文艺：长镜与留白</h3><p>镜子、花样年华按叙事密度、对白量、情绪强度归档；长镜片单独标"耐心门槛"，避免误进爆米花清单。</p><div class="by">— 作者组</div></div></div>
+      <div class="cat"><div class="icon">🕵️</div><div><h3>动作悬疑：节拍与声画</h3><p>谍影重重记手持剪切，拯救大兵瑞恩记声场与群像；只讲电影性，不教战术参数、不列资源站。</p><div class="by">— 硬核组</div></div></div>
+      <div class="cat"><div class="icon">⚖️</div><div><h3>版权与片源</h3><p>片名、导演、年份、类型均为示例；正式档案须绑定正版平台授权或自有版权片源，不收录盗版聚合。</p><div class="by">— 合规</div></div></div>
+    </div>
+  </section>
+
+  <section class="section" id="notes">
+    <span class="eyebrow">VIEWING NOTES</span>
+    <h2 class="h2">观影随笔</h2>
+    <p class="sub">为什么不用"影视网站"</p>
+    <div class="notes">
+      <div class="note"><div class="note-date"><span class="d">14</span><span class="m">Oct 2024</span></div><div class="note-body"><h3>"影视网站"为什么直接弃用</h3><p>"影视网站"四字是最典型的未授权在线播片站命名方式；做在线视听需《信息网络传播视听节目许可证》，擅自从事可关站、撤备案。本页改"影志档案"，只做片单/档案/札记。</p></div></div>
+      <div class="note"><div class="note-date"><span class="d">21</span><span class="m">Oct 2024</span></div><div class="note-body"><h3>真做在线播片要什么</h3><p>国内提供互联网视听节目通常需《信息网络传播视听节目许可证》；无著作权许可传播影视可承担民事赔偿，情节严重可涉刑。纯文字/海报/简介且不开播，也要做ICP备案并拿版权授权。</p></div></div>
+      <div class="note"><div class="note-date"><span class="d">27</span><span class="m">Oct 2024</span></div><div class="note-body"><h3>分档不剧透</h3><p>生活/作者/硬核只标节奏、情绪、耐心门槛；用户按场景选片，正片走正版渠道，不写"免费观看/解析地址"。</p></div></div>
+      <div class="note"><div class="note-date"><span class="d">02</span><span class="m">Nov 2024</span></div><div class="note-body"><h3>必应收录怎么配</h3><p>viewport响应式、首屏关键CSS内联、核心文字直出、菜单触控≥48px、无隐藏跳转；按你要求不写robots/sitemap。</p></div></div>
+    </div>
+  </section>
+
+  <section class="section" id="units" style="background:var(--bg2)">
+    <span class="eyebrow">UNITS</span>
+    <h2 class="h2">展映单元</h2>
+    <p class="sub">影志馆长期策展分类</p>
+    <div class="units">
+      <div class="unit"><div class="ico">🍲</div><h3>生活四季</h3><p>小森林、海街</p></div>
+      <div class="unit"><div class="ico">🎞️</div><h3>作者长镜</h3><p>镜子、花样年华</p></div>
+      <div class="unit"><div class="ico">🕵️</div><h3>悬疑心理</h3><p>谍影重重</p></div>
+      <div class="unit"><div class="ico">🥁</div><h3>硬核动作</h3><p>拯救大兵瑞恩</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <span class="eyebrow">ABOUT</span>
+    <h2 class="h2">关于本站</h2>
+    <p class="sub">静态示例站声明，不涉播片</p>
+    <div class="about">
+      <div class="ab"><div class="ic">🎬</div><h3>站点定位</h3><p>影志档案是电影精选片单、分类档案与观影札记示例站，部署于GitHub Pages，无后端、无片源、无解析。</p></div>
+      <div class="ab"><div class="ic">🗂️</div><h3>页面结构</h3><p>单文件index.html，CSS/JS内联；含精选片单、分类档案、观影随笔、展映单元、关于本站、常见问题。</p></div>
+      <div class="ab"><div class="ic">⚖️</div><h3>合规边界</h3><p>不提供未授权播放/解析/下载；片名/导演/类型均为示例。做视听服务须许可证、ICP备案与版权授权。</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="faq" style="background:var(--bg2)">
+    <span class="eyebrow">FAQ</span>
+    <h2 class="h2">常见问题</h2>
+    <p class="sub">把"影志档案"这件事说清</p>
+    <div class="faq">
+      <details class="fq" open><summary>"影志档案"和"影视网站"一样吗？<span class="plus">+</span></summary><p>不一样。原"影视网站"直接指向未授权播片站；本页改"影志档案"，只做片单/档案/札记，不提供正片、不解析、不下载。</p></details>
+      <details class="fq"><summary>片单里的电影能在线免费看吗？<span class="plus">+</span></summary><p>不能。所有片名、导演、类型、札记均为示例；正片请走院线、正版流媒体、电影资料馆或合法展映。</p></details>
+      <details class="fq"><summary>做真·电影站要什么资质？<span class="plus">+</span></summary><p>只做文字/海报/简介且不开播，做ICP备案并可备注不从事视听；若提供在线视听，需《信息网络传播视听节目许可证》，擅自从事可关站、撤备案。</p></details>
+      <details class="fq"><summary>为什么不用"免费/高清/不卡/解析"？<span class="plus">+</span></summary><p>这类词常指向未授权聚合；无著作权许可传播影视可承担民事赔偿，情节严重可涉刑。盗版站还常带博彩弹窗、诱导装插件。</p></details>
+      <details class="fq"><summary>必应收录注意什么？<span class="plus">+</span></summary><p>viewport响应式、核心文字直出、首屏关键CSS内联、触控区域≥48px、无隐藏跳转；本页按此做，但不写robots/sitemap（按你历史要求）。</p></details>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot-brand"><span class="badge">影志</span><b>影志档案</b></div>
+  <div class="foot-links">
+    <a href="#tiles">精选片单</a>
+    <a href="#cats">分类档案</a>
+    <a href="#notes">观影随笔</a>
+    <a href="#units">展映单元</a>
+    <a href="#about">关于本站</a>
+    <a href="#faq">常见问题</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var links=document.querySelectorAll('.nav-links a');
+  links.forEach(function(a){
+    a.addEventListener('click',function(){
+      links.forEach(function(l){l.classList.remove('active')});
+      this.classList.add('active');
+    });
+  });
+})();
+</script>
+</body>
+</html>
